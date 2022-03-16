@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import ClientList from '../components/ClientList.js'
+import LatestNews from '../components/LatestNews.js'
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline'
@@ -227,9 +227,6 @@ export default function Home() {
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
           <span className="text-3xl font-bold text-gray-900">Dev CRM</span>
-          <span className="float-right justify-self-end">
-            <label className="btn btn-primary mb-10 modal-button" htmlFor="my-modal">Add Customer</label>
-          </span>
         </div>
       </header>
       <main>
@@ -240,40 +237,13 @@ export default function Home() {
           {/* Replace with your content */}
           <div className="flex-wrap px-4 py-6 sm:px-0">
 
-            <ClientList />
+            <LatestNews />
           </div>
           {/* /End replace */}
         </div>
       </main>
 
     </div >
-    <input type="checkbox" id="my-modal" className="modal-toggle" />
-    <div className="modal">
-      <div className="modal-box">
-        <form onSubmit={addCustomer}>
-          <label htmlFor="my-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
-          <label className="flex flex-col mb-5 font-light">
-            Name
-            <input type="text" name="name" className="input input-bordered input-sm w-full max-w-xs mt-2" />
-          </label>
-          <label className="flex flex-col  mb-5 font-light">
-            Company
-            <input type="text" name="company" className="input input-bordered input-sm w-full max-w-xs mt-2" />
-          </label>
-          <label className="flex flex-col mb-5 font-light">
-            Email
-            <input type="text" name="email" className="input input-bordered input-sm w-full max-w-xs mt-2" />
-          </label>
-          <label className="flex flex-col mb-5 font-light">
-            Website
-            <input type="text" name="website" className="input input-bordered input-sm w-full max-w-xs mt-2" />
-          </label>
-          <div className="modal-action">
-            <input type="submit" htmlFor="my-modal" className="btn btn-primary"></input>
-          </div>
-        </form>
-      </div>
-    </div>
   </>
 
   )

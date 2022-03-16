@@ -1,4 +1,5 @@
 import dbConnect from "../../lib/mong-connect";
+import writeMessageToQueue from "../../lib/rabbitmq"
 import Client from '../../model/client.js'
 
 export default async function handler(req, res) {
@@ -13,7 +14,15 @@ export default async function handler(req, res) {
       try {
         let clients = []
         if (process.env.PERSISTENCE) {
-          clients = await Client.find({})
+          // clients = await Client.find({})
+          clients = await Client.aggregate([{
+            $lookup: {
+              from: "news",
+              localField: "company",
+              foreignField: "company",
+              as: "articles"
+            }
+          }])
         } else {
           clients = [
             {
@@ -40,6 +49,10 @@ export default async function handler(req, res) {
     case 'POST':
       try {
         const client = await Client.create(req.body)
+        console.log("about to write to queue. already in mongodb")
+        if (req.body.company) {
+          const writeToQueue = await writeMessageToQueue(req.body.company);
+        }
         res.status(201).json({ success: true, data: client })
       } catch (error) {
         res.status(400).json({ success: error })
